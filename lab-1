@@ -1,0 +1,397 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "ffe1d9e0",
+   "metadata": {},
+   "source": [
+    "# A3 Functions, Parameters, Arguments, Scope\n",
+    "\n",
+    "Before we move on to these set of exercises a few new concepts need to be introduced.\n",
+    "\n",
+    "Functions are blocks of reusable code that perform a specific task. They can take inputs (arguments), perform operations, and produce outputs. In Python, functions are defined using the ```def``` keyword. Following this a number of arguments (or parameters) are defined - seperated by commas.\n",
+    "\n",
+    "This construction allows us to re-use code simply by calling it - specifying the name of the function along with the required arguments.  \n",
+    "\n",
+    "If we want to return a value from the operations performed inside our code block - we use the ```return``` keyword, but this is not strictly necessary. \n",
+    "\n",
+    "## Example\n",
+    "\n",
+    "```\n",
+    "city = \"Glasgow\"\n",
+    "\n",
+    "def greet(name):\n",
+    "    # Local variable\n",
+    "    message = \"Hello \"+name\" from\"\n",
+    "\n",
+    "    print(message, city)\n",
+    "\n",
+    "greet(\"Alice\") #greet function being called with an argument name which is a string\n",
+    "\n",
+    "```\n",
+    "\n",
+    "This code will output ```'Hello Alice from Glasgow'```. The keen eyed of you will notice we are referencing the variable ```city``` here without defining it in the inside of our function. This relates to the concept of *scope*. Scope in Python refers to the region in your code where a variable is accessible. It defines the visibility and lifetime of a variable within a program.\n",
+    "\n",
+    "The variable ```city``` is a global variable because it's defined *outside* any function. Global variables can be accessed from anywhere in the code. However, ```message```  is a local variable because it's defined inside the ```greet()``` function. Local variables are only accessible within the scope of the function in which they're defined. \n",
+    "\n",
+    "The concept of scope can be seen in the following example. \n",
+    "\n",
+    "```\n",
+    "#Global variable\n",
+    "city = \"Glasgow\"\n",
+    "\n",
+    "def greet(name):\n",
+    "    # Local variables\n",
+    "    message = \"Hello \"+name\" from\"\n",
+    "    city = \"Edinburgh\"\n",
+    "    \n",
+    "    print(message, city)\n",
+    "\n",
+    "greet(\"Alice\")\n",
+    "\n",
+    "```\n",
+    "\n",
+    "The above code will now output ```'Hello Alice from Edinburgh'``` as we have reassigned the value of city within the function scope. This change affects the value of ```city``` while operations are run inside the function but outside the function the global variable is used. \n",
+    "\n",
+    "When a variable is accessed within a scope, Python first looks for that variable locally (inside the current scope). If it's not found, Python looks in the next outer scope (enclosing scope), continuing this search until it reaches the global scope. If the variable isn't found in any of these scopes, Python raises a ```NameError```.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3a998a27",
+   "metadata": {},
+   "source": [
+    "## Exercises\n",
+    "\n",
+    "Bob, a tourist, arrived in Glasgow eager to explore the city's culinary delights. He's excited to calculate expenses, savor new dishes, and document his experiences.\n",
+    "\n",
+    "The function ```calculate_expense``` takes two paramaters: the cost of the meal in GBP and the number of meals Bob intends on eating. Use this function to calculate how much Bob's trip will cost if she eats 5 meals that cost £15. Then assign this value to a variable named ```total_expense```. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9441dd9d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Function to calculate the total expense for food\n",
+    "def calculate_expense(food_cost, num_meals):\n",
+    "    total_cost = food_cost * num_meals\n",
+    "    return total_cost"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "703cb7db",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#### SOLUTION ####\n",
+    "cost_per_meal = 15  # Cost per meal in GBP\n",
+    "number_of_meals = 5\n",
+    "\n",
+    "total_expense = calculate_expense(cost_per_meal, number_of_meals)\n",
+    "print(\"Emma's total dining expense in Glasgow:\", total_expense, \"GBP\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "dbf3c828",
+   "metadata": {},
+   "source": [
+    "Bob has heard a lot about the unique square sausage commonly found in Glasgow. He's keen to try one but wants to make sure he's getting the best value for money. The two sausage types are priced the same at a market stall he attends and so wants to decide which item has the largest area. \n",
+    "\n",
+    "Edit the function ```determine_largest_area``` so that it returns the sausage with the most area and assigns it to the variable ```largest_area_result```. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "88d92fc6",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def calculate_sausage_area(side1, side2=None): # this function uses an optional argument - we will discuss this later\n",
+    "    if side2:\n",
+    "        area = side1 * side2  # Rectangle sausage (like a square)\n",
+    "    else:\n",
+    "        area = 3.14 * (side1 / 2) ** 2  # Circular sausage (approximated to pi * r^2)\n",
+    "    return area\n",
+    "\n",
+    "# Emma's sausage areas\n",
+    "square_sausage_area = calculate_sausage_area(4, 4) \n",
+    "\n",
+    "circular_sausage_area = calculate_sausage_area(5)  \n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c0253d6e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#### SOLUTION ####\n",
+    "\n",
+    "def determine_largest_area(area1, area2): # return either \"square sausage\" or \"circular sausage\" \n",
+    "    if area1 > area2:\n",
+    "        return \"square sausage\"\n",
+    "    else:\n",
+    "        return \"circular sausage\"\n",
+    "\n",
+    "largest_area_result = determine_largest_area(square_sausage_area, circular_sausage_area)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6f10ff07",
+   "metadata": {},
+   "source": [
+    "One of Carol's favourite buildings she saw on her trip to Scotland was the Glasgow Tower, she stands at 127m. She wants to go home and tell her friends how tall the building is in inches. Write a function which takes an argument of a height in meters, and returns the value converted to inches. Assign this value to a variable ```tower_height_inches```. *hint: the final output should be a number divisible by 100*. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "5443b877",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "tower_height_meters = 127"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "9f86b8c8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#### SOLUTION ####\n",
+    "\n",
+    "def height_converter(tower_height_meters):\n",
+    "    return tower_height_meters*39.37\n",
+    "\n",
+    "\n",
+    "\n",
+    "tower_height_inches=height_converter(tower_height_meters) #should be near 5000\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "16cd4767",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e0c1ac8f",
+   "metadata": {},
+   "source": [
+    "# A4 Lists & Tuples"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c4d8f0c4",
+   "metadata": {},
+   "source": [
+    "In Python, lists and tuples are both sequence data types, but they have some key differences in terms of mutability and syntax.\n",
+    "\n",
+    "### Lists\n",
+    "Lists are ordered collections that can contain elements of different data types. They are mutable, meaning their elements can be changed after creation. Lists are defined by enclosing elements in square brackets [] and separating them with commas.\n",
+    "\n",
+    "### Tuples\n",
+    "Tuples are similar to lists but are immutable, meaning their elements cannot be changed after creation. They are defined by enclosing elements in parentheses () and separating them with commas.\n",
+    "\n",
+    "The Key Differences are Outlined Below:\n",
+    "\n",
+    "* Mutability: Lists are mutable (can be changed), while tuples are immutable (cannot be changed).\n",
+    "* Syntax: Lists are defined with square brackets [], while tuples are defined with parentheses ()\n",
+    "* Performance: Tuples are generally faster than lists due to their immutability.\n",
+    "\n",
+    "\n",
+    "## Example\n",
+    "```\n",
+    "# Example of a list\n",
+    "glasgow_attractions = ['Kelvingrove Art Gallery', 'Glasgow Cathedral','Riverside Museum', 'The Necropolis', 'Glasgow Science Centre']\n",
+    "print(glasgow_attractions[1])   # Output: 'Glasgow Cathedral'\n",
+    "\n",
+    "# Example of a tuple\n",
+    "glasgow_coordinates = (55.8642, -4.2518)\n",
+    "print(glasgow_coordinates[0])   # Output: 55.8642\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f97f97e6",
+   "metadata": {},
+   "source": [
+    "## Exercises\n",
+    "\n",
+    "On her his in Glasgow, Dave has tried many Scottish Foods such as haggis, shortbread and fish and chips. She ranks each of the food items she tries out of 10 and appends them to a list throughout her journey. Write a function that returns the highest score Dave gave to food in Glasgow on his trip and assign it to a variable ```highest_score```. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "2d02060d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "food_scores = [7.4, 3.9, 2.0, 5.5, 9.2, 2.8, 8.6, 6.1, 4.7, 1.3, 8.8, 5.4, 2.2, 9.9, 3.7, 7.5, 6.2, 1.6, 6.3, 4.1]\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "9701da77",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "9.9\n"
+     ]
+    }
+   ],
+   "source": [
+    "#### SOLUTION ####\n",
+    "\n",
+    "def get_highest_score(food_scores):\n",
+    "    max_value = 0\n",
+    "    for score in food_scores:\n",
+    "        if score>max_value:\n",
+    "            max_value = score\n",
+    "        \n",
+    "    return max_value\n",
+    "\n",
+    "highest_score = get_highest_score(food_scores)\n",
+    "print(highest_score)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b23eca3c",
+   "metadata": {},
+   "source": [
+    "After moving to Scotland from England, Eve was pleasantly suprised by the quality of the Scottish Premiership teams when she went to watch their games over the period of one month. Eve stored a list of the teams she enjoyed watching in the variable ```favourite_teams```. However, after attending the most recent game between Motherwell and Aberdeen - where Aberdeen lost convincingly - she has decided that she now prefers Motherwell to Aberdeen. Use list methods on the ```favourite_teams``` variable to make the appropriate changes to Eve's list. *hint: you may need to visit this list as a reminder. https://www.w3schools.com/python/python_ref_list.asp* "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "345d07c4",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "favourite_teams = [\"Celtic\",\"Rangers\",\"Hearts\",\"St.Johnstone\",\"Aberdeen\",\"Kilmarknock\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e463fd1e",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7b70e311",
+   "metadata": {},
+   "source": [
+    "During Frank's commute to work every morning, he would hear the beautiful sound of bagpipes. Over the period of a year, he recorded the notes he heard. One day he wants to determine how many times he has heard an E note. Use the ```count``` function on the list ```musicial_notes``` to determine this - and assign this to the variable ```E_note_count```. \n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "22c33adb",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "musical_notes = ['E', 'G', 'A', 'D', 'A#', 'E', 'F#', 'D#', 'C#', 'D#', 'A#', 'A#', 'A#', 'C#', 'B', 'E', 'D#', 'F#', 'B', 'A', 'G#', 'C#', 'E', 'F#', 'F#', 'F#', 'F#', 'E', 'B', 'G#', 'E', 'D', 'F#', 'D#', 'A', 'A#', 'E', 'D#', 'F#', 'A#', 'D#', 'A#', 'A', 'E', 'F#', 'E', 'E', 'B', 'C#', 'D#', 'D#', 'E', 'A#', 'F', 'C#', 'A', 'D#', 'A#', 'A#', 'G#', 'G#', 'E', 'F#', 'F#', 'G#', 'F', 'D', 'A#', 'F#', 'A#', 'E', 'A', 'D#', 'C#', 'E', 'A#', 'F#', 'A', 'D#', 'A#', 'A', 'A#', 'F#', 'F', 'A#', 'D', 'D#', 'E', 'C#', 'G#', 'F#', 'E', 'F#', 'C#', 'D', 'E', 'G#', 'F#', 'E', 'A#', 'F#', 'G#', 'G#', 'D#', 'A#', 'G#', 'G#', 'C#', 'G#', 'A', 'F', 'A#', 'C#', 'E', 'D#', 'A#', 'G#', 'G#', 'A', 'A#', 'F', 'D', 'F#', 'E', 'E', 'G#', 'A#', 'E', 'A', 'D', 'C#', 'D', 'G#', 'F#', 'A#', 'A', 'A#', 'F#', 'D#', 'D#', 'C#', 'A#', 'F#', 'A#', 'G#', 'A', 'D#', 'A', 'D#', 'A#', 'D#', 'D#', 'A#', 'E', 'D#', 'A#', 'D#', 'E', 'D', 'G#', 'D#', 'A#', 'A', 'D#', 'A', 'A#', 'F#', 'F#', 'D', 'D#', 'G#', 'A#', 'C#', 'E', 'E', 'C#', 'D#', 'F#', 'E', 'G#', 'F#', 'D#', 'G#', 'G#', 'G#', 'D#', 'D', 'A#', 'A#', 'C#', 'G#', 'C#', 'F#', 'F#', 'F#', 'D', 'F#', 'E', 'G#', 'F#', 'D#', 'C#', 'A#', 'G#', 'D#', 'G#', 'D#', 'E', 'E']\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "3326376a",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "30\n"
+     ]
+    }
+   ],
+   "source": [
+    "#### SOLUTION ####\n",
+    "\n",
+    "E_note_count = musical_notes.count('E')\n",
+    "print(E_note_count)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "08dcc3f6",
+   "metadata": {},
+   "source": [
+    "# B1 Revision & Harder Questions\n",
+    "\n",
+    "## Include Recursion"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "2ffe3c44",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4778bd07",
+   "metadata": {},
+   "source": [
+    "# B2 Comprehensions and Dictionaries"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "863071cc",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.12"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
